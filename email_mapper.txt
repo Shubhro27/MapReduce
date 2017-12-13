@@ -1,0 +1,36 @@
+Mapper code is:
+	#! /usr/bin/python
+	import sys
+	import csv
+	import os
+
+	
+	f_in = open("email_input.csv","w")  #create a csv file to i/p the sysin values
+
+	for item in sys.stdin:
+	 f_in.write(item)     #writing sys in to email_input.csv
+
+	f_in.close()
+
+	with open("email_input.csv") as f:
+	 reader = csv.reader(f)   #will read it as a .csv file and retain the , within "" eg,"Sullivan, Jacob J"
+	 for row in reader:
+	  if row[3] == "H" and row[4]:
+	   format = "\"%s\"\t%s"
+	   print(format %(row[4],1))
+
+	f.close()
+	os.remove("email_input.csv") #remove the .csv file as no longer required
+
+
+Run command: cat attachment_Emails.csv|./email_mapper.py
+	
+o/p:
+	"Sullivan, Jacob J"     1
+	"Mills, Cheryl D"       1
+	"Mills, Cheryl D"       1
+	"Mills, Cheryl D"       1
+	"PIR"   1
+	"Sullivan, Jacob J"     1
+	"Blumenthal, Sidney"    1
+	"Sullivan, Jacob J"     1

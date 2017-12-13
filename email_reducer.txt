@@ -1,0 +1,34 @@
+reducer code is:
+	#! /usr/bin/python
+	import sys
+	import csv
+	import os
+	#
+	counter = 0
+	email_dict = {}
+	for email_list in sys.stdin:
+	 email_list = email_list.strip("\n")        #strips the "carriage return"
+	 from_name,count = email_list.split("\t",1) #splits the complete name and count
+	 count = int(count)
+	 #
+	 if counter == 0:
+	  email_dict[from_name] = count
+	  counter = counter + 1
+	 else:
+	  nh = [names for names in email_dict]
+	  if from_name in nh:
+	   email_dict[from_name] = int(email_dict[from_name]) + count
+	  else:
+	   email_dict[from_name] = count
+	#sort dictionary keys in descending order
+	desc_email_dict = sorted(email_dict,key=email_dict.get,reverse=True)
+    #pick the 1st 3 items on the list
+	for item in range(0,3):
+	 print(desc_email_dict[item],email_dict[desc_email_dict[item]])
+	 
+run command: cat attachment_Emails.csv|./email_mapper2.py|./email_reducer2.py
+
+output:
+('"Sullivan, Jacob J"', 3)
+('"Mills, Cheryl D"', 3)
+('"Blumenthal, Sidney"', 1)
